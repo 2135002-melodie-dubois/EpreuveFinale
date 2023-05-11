@@ -1,0 +1,167 @@
+openapi: 3.0.0
+info:
+  version: 3.0.0
+  title: DessertApi
+  description: Api pour les desserts
+  
+servers: 
+  - url: http://localhost/DessertApi
+paths:
+  /dessert:
+    get:
+      tags:
+        - Dessert
+      summary: Récupère une liste de tous les desserts
+      responses: 
+        '200': 
+          description: Une liste de tous les desserts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    type: string
+                example:
+                    id : 1
+                    nom: Boite de biscuits
+                    description: Une boite de biscuits achetés a l'épicerie
+    post:
+      tags: 
+        - Dessert
+      summary: Création d'un dessert.
+      parameters:
+        - name: nom
+          in: query
+          schema:
+            type: string
+          required: true
+          description: Le nom du dessert
+        - name: description
+          in: query
+          schema:
+            type: string
+          required: true
+          description: La description du dessert
+      requestBody:
+        description: Les informations sur le dessert crée
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nom:
+                  type: string
+                description:
+                  type: string
+              example:
+                nom : Brownie
+                description: Un gateau au chocolat
+      responses:
+        '201': 
+          description: Le id du dessert crée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                example:
+                  id : 1
+
+  /dessert/{id}:
+    put:
+      tags:
+        - Dessert
+      summary: Modifie un dessert
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: Le dessert a modifier
+        - name: nom
+          in: query
+          schema:
+            type: string
+          required: true
+          description: Le nom du dessert
+        - name: description
+          in: query
+          schema:
+            type: string
+          required: true
+          description: La description du dessert
+      responses: 
+        '200': 
+          description: Le id du dessert modifié
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                example:
+                    id : 37
+    delete:
+      tags:
+        - Dessert
+      summary: Supprime un dessert
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+          description: Le dessert a supprimer
+      responses: 
+        '200': 
+          description: Le id du dessert supprimé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                example:
+                    id : 1
+  /user:
+    get:
+      tags:
+        - User
+      summary: Récupère la clé api
+      parameters:
+        - name: user
+          in: query
+          schema:
+            type: string
+          required: true
+          description: Le nom d'usager
+        - name: password
+          in: query
+          schema:
+            type: string
+          required: true
+          description: Le mot de passe de l'usager
+      responses: 
+        '200': 
+          description: La clé api
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  key:
+                    type: string
+                example:
+                    key : "11111"
+  
